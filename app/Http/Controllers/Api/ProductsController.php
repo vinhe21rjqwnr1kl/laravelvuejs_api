@@ -13,7 +13,13 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return Product::with(['category','brand'])->get();
+        try {
+            return Product::with(['category', 'brand'])->get();
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -27,19 +33,19 @@ class ProductsController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'brand_id'=> 'required|exists:brands,id',
+            'brand_id' => 'required|exists:brands,id',
             'img_url' => 'nullable|string|url',  //validate img_url
 
         ]);
         //create a new product
 
         $product = Product::create([
-               'name' => $request->name,
-               'description' => $request->description,
-               'price' => $request->price,
-               'category_id' => $request->category_id,
-               'brand_id' => $request->brand_id,
-               'img_url' => $request->img_url,  //save img_url
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
+            'img_url' => $request->img_url,  //save img_url
         ]);
 
         return response()->json($product, 201); //return created product with 201 status
@@ -50,9 +56,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with(['category','brand'])->findOrFail($id); //find product by id
+        $product = Product::with(['category', 'brand'])->findOrFail($id); //find product by id
         return response()->json($product);
-
     }
 
     /**
@@ -60,25 +65,25 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-         //validate request
+        //validate request
         $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'brand_id'=> 'required|exists:brands,id',
+            'brand_id' => 'required|exists:brands,id',
             'img_url' => 'nullable|string|url',  //validate img_url
 
         ]);
         //update
-         $product = Product::findOrFail($id);
-         $product = Product::update([
-               'name' => $request->name,
-               'description' => $request->description,
-               'price' => $request->price,
-               'category_id' => $request->category_id,
-               'brand_id' => $request->brand_id,
-               'img_url' => $request->img_url,  //save img_url
+        $product = Product::findOrFail($id);
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+            'brand_id' => $request->brand_id,
+            'img_url' => $request->img_url,  //save img_url
         ]);
 
         return response()->json($product); //return update product
