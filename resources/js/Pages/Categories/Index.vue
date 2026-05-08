@@ -1,7 +1,8 @@
 <template>
     <div>
         <Menu></Menu>
-         <h1>Trang Categories</h1>
+             <h1 style="text-align: center;font-size: 20px;">Manage Categories</h1>
+
          <div v-if="loading" class="text-center text-blue-600">Loading categories...</div>
          <div v-else>
             <button @click="openModal(null)" class="bg-teal-500 text-white px-4 py-2 rounded mb-4">
