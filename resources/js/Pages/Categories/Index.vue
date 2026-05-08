@@ -34,7 +34,7 @@
   </tbody>
 </table>
    <!-- Modal for adding/editing categories -->
-            <div v-if="isModalOpen" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+            <div v-if="isModalOpen" @click.self="closeModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
                 <div class="bg-white p-6 rounded shadow-lg w-1/3">
                     <h2 class="text-xl font-semibold mb-4">{{ isEditing ? 'Edit Category' : 'Add Category' }}</h2>
 
