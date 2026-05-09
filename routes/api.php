@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\BrandsController;
 use App\Http\Controllers\Api\CategoriesController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +16,10 @@ Route::name('api.')->group(function () {
     Route::apiResource('categories', CategoriesController::class);
     Route::apiResource('brands', BrandsController::class);
     Route::apiResource('products', ProductsController::class);
+    Route::post('orders', [OrderController::class, 'store']);
+Route::get('orders', [OrderController::class, 'index']);
+Route::resource('payment', PaymentController::class);
+
 });
 
 
